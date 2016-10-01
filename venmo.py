@@ -1,8 +1,8 @@
 ''' Scrape & analyze venmo page '''
+from dict import emoji_dict
 from lxml import html
 import requests
 import csv
-
 
 class venmo:
 
@@ -21,27 +21,26 @@ class venmo:
             da = fixDate(date[i].encode('ascii'))
 
             r = analyze(de)
-            if r != None:
+            if len(r) != 0:
                 result.append(r)
 
-        printReciept(result)
+        print 'According to our analysis...'
+        print result
         return result
 
-def analyze(d):
-    if '\U0001f32e' in d:
-        return 'You love tacos.'
-
-def printReciept(result):
-    print 'According to our analysis...'
-    for l in result:
-        print l
+def analyze(d): #TODO: currently just my fav emojis
+    result= []
+    while '\U0001f' in d:
+        begin = d.find('\U0001f')
+        emutf = d[begin:begin+10]
+        d = d[begin+10:]
+        result.append(emoji_dict[emutf])
+    return result
 
 def fixDate(ugly):
     arr = ugly.split()
     # TODO: fix recent transactions that show up differently
     return arr[1] +' '+ arr[2] +' '+ arr[3]
-
-
 
 v = venmo()
 v.scrape('je-nnywong')
