@@ -15,8 +15,8 @@ class venmo:
         #tran = tree.xpath('//div[@class="paymentpage-subline"]/text()')
         desc = tree.xpath('//div[@class="paymentpage-text m_five_t"]/text()')
         date = tree.xpath('//div[@class="date"]/text()')
-        
-        for i in range (len(desc)): 
+
+        for i in range (len(desc)):
             de = desc[i].encode('unicode_escape')
             da = fixDate(date[i].encode('ascii'))
 
@@ -42,5 +42,11 @@ def fixDate(ugly):
     # TODO: fix recent transactions that show up differently
     return arr[1] +' '+ arr[2] +' '+ arr[3]
 
-v = venmo()
-v.scrape('je-nnywong')
+
+
+def main():
+    v = venmo()
+    v.scrape('je-nnywong')
+
+if __name__ == "__main__":
+    main()
